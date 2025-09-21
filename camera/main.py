@@ -18,7 +18,7 @@ ALPHA = 0.55
 PRUNE = 15
 prev = time.time()
 fps = 0.0
-color_choices = [(0,255,255), (255,200,0), (255,105,180), (180,105,255), (200,255,200)]
+color_choices = [(0,255,255), (255,200,0), (255,105,180), (180,105,255), (200,255,200), (0, 0, 255)]
 model = YOLO("camera\\models\\yolo11n.pt")
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
@@ -47,7 +47,7 @@ while True:
                 det_boxes.append([x1,y1,x2,y2])
     assigned = {}
     used_ids = set()
-    IOU_TH = 0.3
+    IOU_TH = 1.3 
 
     for db in det_boxes:
         best_id, best_score = None, -1.0
