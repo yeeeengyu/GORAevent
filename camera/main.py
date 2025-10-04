@@ -37,7 +37,8 @@ while True:
     flipped = cv2.flip(frame, 1) # 화면좌우반전
     H, W = flipped.shape[:2]
     results = model(flipped, imgsz=480, conf=0.7)[0] # fps 안나오면 imgsz 낮추기
-    anot = results.plot()
+    
+    anot = results.plot() # anot = flipped.copy()
     det_boxes = []
     if results.boxes is not None and len(results.boxes) > 0:
         bxs = results.boxes.xyxy.cpu().numpy()
@@ -94,7 +95,6 @@ while True:
             py = int(y1 + v * bh)
             if x1 <= px < x2 and y1-2 <= py < y2+2:
                 cv2.circle(overlay, (px, py), r, random.choice(color_choices), -1, lineType=cv2.LINE_AA)
-        cv2.rectangle(overlay, (x1, y1), (x2, y2), (0, 200, 255), 2) # 박스지우려면 이거 지우셈
     cv2.addWeighted(overlay, ALPHA, anot, 1-ALPHA, 0, anot)
 
     for fid, box in assigned.items():
